@@ -2,12 +2,30 @@ const db = require("../models") //index.js file in models
 
 const jwt = require("jsonwebtoken");
 
+
+//get all users 
+exports.allUsers = async function(req, res, next){
+    try{
+        db.User.find({}, function (err, users) {
+            res.send(users);
+        });
+    } catch(err){
+        if(err.code){
+            err.message = "Could not get all users"
+        }
+        return next({
+            status: 400,
+            message: err.message
+        })
+    }
+}
+
 exports.signIn = async function(req, res, next){
     // finding a user
     let user = db.User.findOne({
         email: req.body.email
     })
-    let {id, user, profileImageUrl} = user
+    let {id, username, profileImageUrl} = user
     let isMatch = await user.comparePassword(req.body.password)
     // checking if their password matches what was sent to the sever 
     // if it all matches
