@@ -9,4 +9,4 @@ mongoose.connect("mongodb://localhost/warbler",{
 })
 
 
-
+module.exports.User = require("./user"); // bundling. do this for all models

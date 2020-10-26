@@ -2,11 +2,23 @@ const db = require("../models") //index.js file in models
 
 const jwt = require("jsonwebtoken");
 
-exports.signIn = function(){
+exports.signIn = async function(req, res, next){
+    // finding a user
+    let user = db.User.findOne({
+        email: req.body.email
+    })
+    let {id, user, profileImageUrl} = user
+    let isMatch = await user.comparePassword(req.body.password)
+    // checking if their password matches what was sent to the sever 
+    // if it all matches
+    // log them in
 
 }
 
 exports.signUp = async function(req, res, next){
+    // create a user
+        // create a token called signing a token
+            // process.env.SECRET_KEY
     try {
         let user = await db.User.create(req.body)
         let { id, username, profileImageUrl } = user
@@ -17,15 +29,12 @@ exports.signUp = async function(req, res, next){
         },
             process.env.SECRET_KEY
         );
-        return response.status(200).json({
+        return res.status(200).json({
             id,
             username,
             profileImageUrl,
             token
         }) 
-        // create a user
-        // create a token called signing a token
-            // process.env.SECRET_KEY
 
     } catch (err) {
         if(err.code === 11000){
