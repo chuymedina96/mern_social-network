@@ -20,13 +20,38 @@ exports.allUsers = async function(req, res, next){
     }
 }
 
+
+//sign in a user
 exports.signIn = async function(req, res, next){
-    // finding a user
-    let user = db.User.findOne({
-        email: req.body.email
-    })
-    let {id, username, profileImageUrl} = user
-    let isMatch = await user.comparePassword(req.body.password)
+    try{
+        // finding a user
+        let user = await db.User.findOne({
+            email: req.body.email
+        })
+        let {id, username, profileImageUrl} = user
+        let isMatch = await user.comparePassword(req.body.password)
+        if(isMatch){
+            let token = jwt.sign(
+                {
+                    id,
+                    username,
+                    profileImageUrl
+                },
+                process.env.SECRET_KEY // singing the token so we an later verify it
+            );
+
+        }
+        else{
+            return next({
+                status:400,
+                message: "Invalid Email/Password"
+            })
+        }
+    } catch(err){
+        return next({ status: 400, message: "Invalud Email/Password" })
+    }
+
+
     // checking if their password matches what was sent to the sever 
     // if it all matches
     // log them in
