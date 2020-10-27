@@ -1,10 +1,8 @@
-const express = require("express");
+const express   = require("express");
+const router    = express.Router()
 
-const router = express.Router()
-
-const { signUp }    = require("../handlers/auth")
-const { allUsers }  = require("../handlers/auth")
-const { signIn }    = require("../handlers/auth")
+// Importing controller functions or "handlers"
+const { signUp, allUsers, signIn } = require("../handlers/auth")
 
 router.post("/signup", signUp)
 

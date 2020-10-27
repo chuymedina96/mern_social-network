@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //get all users 
 exports.allUsers = async function(req, res, next){
-    try{
+    try {
         db.User.find({}, function (err, users) {
             res.send(users);
         });
@@ -23,13 +23,13 @@ exports.allUsers = async function(req, res, next){
 
 //sign in a user
 exports.signIn = async function(req, res, next){
-    try{
-        // finding a user
+    try {
+        // finding a user by email
         let user = await db.User.findOne({
             email: req.body.email
-        })
-        let {id, username, profileImageUrl} = user
-        let isMatch = await user.comparePassword(req.body.password)
+        });
+        let { id, username, profileImageUrl } = user
+        let isMatch = await user.comparePassword(req.body.password);// checking if their password matches what was sent to the sever 
         if(isMatch){
             let token = jwt.sign(
                 {
@@ -39,24 +39,24 @@ exports.signIn = async function(req, res, next){
                 },
                 process.env.SECRET_KEY // singing the token so we an later verify it
             );
+            return res.status(200).json({
+                id,
+                username,
+                profileImageUrl,
+                token
+            });
 
-        }
-        else{
+        } else {
             return next({
-                status:400,
-                message: "Invalid Email/Password"
+                status: 400,
+                message: "Invalid Email/Password boop"
             })
-        }
-    } catch(err){
-        return next({ status: 400, message: "Invalud Email/Password" })
+        };
+    } catch(e){
+        return next({ status: 400, message: "Invalid Email/Password foo" })
     }
 
-
-    // checking if their password matches what was sent to the sever 
-    // if it all matches
-    // log them in
-
-}
+};
 
 exports.signUp = async function(req, res, next){
     // create a user
