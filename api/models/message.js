@@ -4,17 +4,22 @@ const bcrypt = require("bcrypt")
 
 const User = require("./user")
 
-const messageSchema = new mongoose.Schema({
-    message: {
-        type: String,
-        maxLength: 160,
-        required: true,
+const messageSchema = new mongoose.Schema(
+    {
+        message: {
+            type: String,
+            maxLength: 160,
+            required: true,
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId, // just an object id or unique identifier for a user
+            ref: "User" // direct reference to the user model
+        },
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId, // just an object id or unique identifier for a user
-        ref: "User" // direct reference to the user model
+    {
+        timestamps: true
     }
-})
+);
 
 messageSchema.pre("remove", async function(next){
     try {
