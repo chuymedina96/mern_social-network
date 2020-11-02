@@ -33,7 +33,7 @@ class Navbar extends Component {
 }
 function mapStateToProps(state){
     return {
-        currenUser: state.currenUser
+        currenUser: state.currentUser
     }
 }
 

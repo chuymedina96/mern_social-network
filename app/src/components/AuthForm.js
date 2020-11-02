@@ -11,6 +11,12 @@ export default class AuthForm extends Component {
        };
    } 
 
+   handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+   }
+
 
    render(){
        const {email, username, password, profileImageUrl} = this.state;
@@ -23,7 +29,41 @@ export default class AuthForm extends Component {
                        <form onSubmit={this.handleSubmit}>
                            <h2>{heading}</h2>
                            <label htmlfor="email">Email:</label>
-                           <input className="form-control" id="email" name="email" onChange={this.handleChange} type="text"></input>
+                            <input 
+                                className="form-control" 
+                                id="email" 
+                                name="email" 
+                                onChange={this.handleChange} 
+                                type="text">
+                            </input>
+                           <label htmlfor="email">Password:</label>
+                            <input 
+                                className="form-control" 
+                                id="password" 
+                                name="password" 
+                                onChange={this.handleChange} 
+                                type="password">
+                            </input>
+                            {signUp && (
+                                <div>
+                                    <label htmlfor="username">Username:</label>
+                                        <input 
+                                            className="form-control" 
+                                            id="username" 
+                                            name="username" 
+                                            onChange={this.handleChange} 
+                                            type="text">
+                                        </input>
+                                    <label htmlfor="image-url">Image URL:</label>
+                                        <input 
+                                            className="form-control" 
+                                            id="image-url" 
+                                            name="profileImageUrl" 
+                                            onChange={this.handleChange} 
+                                            type="text">
+                                        </input>
+                                </div>
+                            )}
                        </form>
                    </div>
                </div>
