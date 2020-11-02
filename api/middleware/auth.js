@@ -44,7 +44,7 @@ exports.ensureCorrectUser = function(req, res, next){
                 })
             }
         });
-    } catch(e) {
+    } catch(err) {
         return next({
             status: 401,
             message: "Unauthorized"

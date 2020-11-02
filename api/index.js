@@ -22,12 +22,7 @@ app.use(bodyParser.json()) //Because we are building an API
 // all routes here
 app.use("/api/auth", authRoutes);
 
-app.use(
-    "/api/users/:id/messages", 
-    loginRequired, 
-    ensureCorrectUser, 
-    messagesRoutes
-);
+app.use("/api/users/:id/messages", loginRequired, ensureCorrectUser, messagesRoutes);
 
 app.use("/api/messages", loginRequired, async function(req,res,next){
     try{
