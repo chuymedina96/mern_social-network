@@ -12,6 +12,8 @@ const messagesRoutes= require("./routes/messages")
 const { loginRequired, ensureCorrectUser } = require("./middleware/auth")
 const { json } = require("body-parser")
 
+const db = require("./models")
+
 
 
 const PORT = 8081;
